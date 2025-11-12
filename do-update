@@ -1,0 +1,1 @@
+while true; do ./update.sh ; sleep 1m; done

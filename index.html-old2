@@ -1,0 +1,1652 @@
+<!-- options keys:--><!--               - blockHeightsByTxid-->
+<!--             - sharedBlockHeight (int)-->
+<!--                - showDates (true|false)-->
+<!--                 - highlightAddress (address)-->
+<!--             - addrGainsByTxid (map)-->
+<!--          - addrLossesByTxid (map)-->
+<!--                 - mempoolDetailsByTxid (map)-->
+<!-- txBlockHeightsByTxid_orSharedBlockHeight, showDates=false, highlightAddress, addrGainsByTxid, addrLossesByTxid)-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="generator" content=
+"HTML Tidy for HTML5 for Linux version 5.8.0">
+<meta charset="utf-8">
+<base href="/">
+<meta name="csrf-token" content=
+"yJgmZYFV-SYpYSnT79bm0YT0Jn_53p5S3EtA">
+<meta name="viewport" content=
+"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no">
+<meta name="description" content=
+"Open-source, easy-to-use, educational Bitcoin explorer whose only dependency is your Bitcoin Core node.">
+<link id="dark-v1-theme-link-tag" href=
+"./style/dark-v1.min.css?v=2023-06-14-1dbd3d8fc2" integrity=
+"sha384-N4vpIzX+w8OiVt/PRWfSTxIBA/r/2wp/9H3d3Qxmb/6woHCt9/HZQl9Nc3XByIqU"
+crossorigin="anonymous">
+<link id="light-theme-link-tag" href=
+"./style/light.min.css?v=2023-06-14-1dbd3d8fc2" integrity=
+"sha384-oFtx78mBk7Y/IOR4rl1Ij5Wf3/5FnXjwqcmvYpdvI/piekQkeaq72KSZjWUc3Uaw"
+crossorigin="anonymous">
+<link id="dark-theme-link-tag" rel="stylesheet" href=
+"./style/dark.min.css?v=2023-06-14-1dbd3d8fc2" integrity=
+"sha384-CZz6XiKcNpqio2wvNlCOZ/wEbjjS0Z7W7+zn6bzl5kfs5VS9nFi/jzIAxIobXrtg"
+crossorigin="anonymous">
+<style>
+@font-face {
+        font-family: "bootstrap-icons";
+
+        src:    url("./font/bootstrap-icons.woff2?v=2023-06-14-1dbd3d8fc2") format("woff2"),
+                        url("./font/bootstrap-icons.woff?v=2023-06-14-1dbd3d8fc2") format("woff");
+}
+</style>
+<link rel="stylesheet" href=
+"./style/bootstrap-icons.css?v=2023-06-14-1dbd3d8fc2" integrity=
+"sha384-rJFhkIguED0Z4GX6r6ReHpTCkwWtiPHZnQtWVP0DQWcKHzeJAlYb1m/xdYkeEk+f"
+crossorigin="anonymous">
+<link id="canonical" rel="canonical" href=
+"https://bitcoinexplorer.org">
+<meta property="og:title" content=
+"BitcoinExplorer.org - Open-Source Bitcoin Explorer">
+<meta property="og:description" content=
+"Open-source, easy-to-use, educational Bitcoin explorer whose only dependency is your Bitcoin Core node.">
+<meta property="og:image" content=
+"https://bitcoinexplorer.org/img/preview.png">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:site" content="@BitcoinExplorer">
+<meta property="twitter:creator" content="@BitcoinExplorer">
+<meta property="twitter:title" content="BitcoinExplorer.org">
+<meta property="twitter:description" content=
+"Open-source, easy-to-use, educational Bitcoin explorer whose only dependency is your Bitcoin Core node.">
+<meta property="twitter:image:src" content=
+"https://bitcoinexplorer.org/img/preview.png">
+<meta property="twitter:domain" content="bitcoinexplorer.org">
+<link rel="apple-touch-icon" sizes="180x180" href=
+"./img/network-mainnet/apple-touch-icon.png?v=2023-06-14-1dbd3d8fc2">
+<link rel="icon" type="image/png" sizes="32x32" href=
+"./img/network-mainnet/favicon-32x32.png?v=2023-06-14-1dbd3d8fc2">
+<link rel="icon" type="image/png" sizes="16x16" href=
+"./img/network-mainnet/favicon-16x16.png?v=2023-06-14-1dbd3d8fc2">
+<link rel="manifest" href="./img/network-mainnet/site.webmanifest">
+<link rel="mask-icon" href=
+"./img/network-mainnet/safari-pinned-tab.svg" color="#f7931a">
+<link rel="shortcut icon" href=
+"./img/network-mainnet/favicon.ico?v=2023-06-14-1dbd3d8fc2">
+<meta name="apple-mobile-web-app-title" content="BTC Explorer">
+<meta name="application-name" content="BTC Explorer">
+<meta name="msapplication-TileColor" content="#022e70">
+<meta name="msapplication-config" content=
+"./img/network-mainnet/browserconfig.xml">
+<meta name="theme-color" content="#022e70">
+<!-- debug as if we're in privacy mode (which means we don't have exchange rate data)--><!-- debug as if we're in performance protection mode (which means we don't calculate UTXO set details)--><!-- debug as if we don't have result.blockstats (applies to block pages when node version < 0.17.0)--><!--if (result)--><!--       - result.blockstats = null;--><!-- no networkVolume-->
+<title>Bitcoin Explorer</title>
+</head>
+<body class="bg-header-footer">
+<nav class="navbar navbar-expand-md navbar-dark bg-header-footer">
+<div class="container"><a class="navbar-brand" href=
+"./"><span><img class="header-image" src=
+"./img/network-mainnet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt=
+"logo"><span class="fw-light">Bitcoin</span></span></a>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav me-auto"></ul>
+<ul class="navbar-nav">
+<li class=
+"nav-item dropdown me-0 me-md-2 mt-2 mt-md-0 text-center text-md-start">
+<a class=
+"nav-link dropdown-toggle bg-header-footer-highlight rounded" href=
+"javascript:void(0)" role="button" data-bs-toggle="dropdown"
+aria-haspopup="true" aria-expanded="false"><img class=
+"align-text-top me-1" src=
+"./img/network-mainnet/coin-icon.svg?v=2023-06-14-1dbd3d8fc2"
+style="width: 20px;"></a>
+<div class="dropdown-menu dropdown-menu-end shadow" aria-label=
+"Demo Sites"><span class="dropdown-header">Public Demo
+Sites</span><a class="dropdown-item" href=
+"https://be.anyone.eu.org"><img class="align-text-top me-2" src=
+"./img/network-mainnet/coin-icon.svg?v=2023-06-14-1dbd3d8fc2"
+style="width: 20px;">Mainnet</a><a class="dropdown-item" href=
+"https://testnet.bitcoinexplorer.org"><img class=
+"align-text-top me-2" src=
+"./img/network-testnet/coin-icon.svg?v=2023-06-14-1dbd3d8fc2"
+style="width: 20px;">Testnet</a><a class="dropdown-item" href=
+"https://ex.signet.bublina.eu.org"><img class="align-text-top me-2"
+src="./img/network-signet/coin-icon.svg?v=2023-06-14-1dbd3d8fc2"
+style="width: 20px;">Signet</a></div>
+</li>
+<li class=
+"nav-item dropdown me-0 me-md-2 mt-2 mt-md-0 text-center text-md-start">
+<a class=
+"nav-link rounded bg-header-footer-highlight text-white dropdown-toggle"
+href="javascript:void(0)" role="button" data-bs-toggle="dropdown"
+aria-haspopup="true" aria-expanded="false"></a>
+<div class="dropdown-menu dropdown-menu-end shadow" aria-label=
+"Tools Items"><span class="dropdown-header">Basics</span><a class=
+"dropdown-item" href="./node-details"> <span>Node
+Details</span></a><a class="dropdown-item" href="./blocks">
+<span>Browse Blocks</span></a>
+<hr class="dropdown-divider mt-2 mb-1">
+<span class="dropdown-header">Mempool</span><a class=
+"dropdown-item" href="./mempool-summary"> <span>Mempool
+Summary</span></a><a class="dropdown-item" href="./next-block">
+<span>Next Block</span></a><a class="dropdown-item" href=
+"./mempool-transactions"> <span>Browse Mempool</span></a>
+<hr class="dropdown-divider mt-2 mb-1">
+<span class="dropdown-header">Analysis</span><a class=
+"dropdown-item" href="./mining-summary"> <span>Mining
+Summary</span></a><a class="dropdown-item" href="./utxo-set">
+<span>UTXO Set</span></a><a class="dropdown-item" href=
+"./block-stats"> <span>Block Stats</span></a><a class=
+"dropdown-item" href="./block-analysis"> <span>Block
+Analysis</span></a><a class="dropdown-item" href=
+"./difficulty-history"> <span>Difficulty
+History</span></a><a class="dropdown-item" href="./tx-stats">
+<span>Transaction Stats</span></a><a class="dropdown-item" href=
+"./next-halving"> <span>Next Halving</span></a>
+<hr class="dropdown-divider mt-2 mb-1">
+<span class="dropdown-header">Technical</span><a class=
+"dropdown-item" href="./api/docs"> <span>API</span></a><a class=
+"dropdown-item" href="./rpc-browser"> <span>RPC
+Browser</span></a><a class="dropdown-item" href="./rpc-terminal">
+<span>RPC Terminal</span></a><a class="dropdown-item" href=
+"./peers"> <span>Peers</span></a>
+<hr class="dropdown-divider mt-2 mb-1">
+<span class="dropdown-header">Fun</span><a class="dropdown-item"
+href="./fun"> <span>Bitcoin Fun</span></a><a class="dropdown-item"
+href="./quotes"> <span>Quotes</span></a><a class="dropdown-item"
+href="./holidays"> <span>Holidays</span></a><a class=
+"dropdown-item" href="./bitcoin-whitepaper"> <span>Whitepaper
+Extractor</span></a></div>
+</li>
+<li class=
+"nav-item dropdown me-0 me-md-3 mt-2 mt-md-0 text-center text-md-start">
+<a class=
+"nav-link rounded bg-header-footer-highlight text-white dropdown-toggle"
+href="javascript:void(0)" id="navbarDropdown" role="button"
+data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded=
+"false"></a>
+<div class="dropdown-menu dropdown-menu-end shadow"
+aria-labelledby="navbarDropdown"><span class=
+"dropdown-header">Display Currency</span>
+<div class="btn-group ms-3"><span class=
+"btn btn-primary btn-sm">BTC</span><a class=
+"btn btn-outline-primary btn-sm" href=
+"./changeSetting?name=displayCurrency&amp;value=sat">sat</a></div>
+<hr class="dropdown-divider mt-2 mb-2">
+<span class="dropdown-header">Theme</span>
+<div class="btn-group ms-3"><a class=
+"btn btn-sm px-3 btn-outline-primary" id="theme-toggler-light"
+href="javascript:void(0);" onclick=
+"activateTheme('light'); return false;"></a><a class=
+"btn btn-sm px-3 btn-primary" id="theme-toggler-dark" href=
+"javascript:void(0);" onclick=
+"activateTheme('dark'); return false;"></a><a class=
+"btn btn-sm px-3 btn-outline-primary" id="theme-toggler-dark-v1"
+href="javascript:void(0);" onclick=
+"activateTheme('dark-v1'); return false;"></a></div>
+<hr class="dropdown-divider mt-2 mb-2">
+<span class="dropdown-header">Display Timezone</span>
+<div class="btn-group ms-3"><a class="btn btn-sm px-3 btn-primary"
+href=
+"./changeSetting?name=uiTimezone&amp;value=utc">UTC</a><a class=
+"btn btn-sm px-3 btn-outline-primary" href=
+"./changeSetting?name=uiTimezone&amp;value=local">Local</a></div>
+<p class="px-3 pt-2 small text-muted">"Local" uses your browser's
+default offset:<span class="badge bg-light text-dark ms-1 border"
+id="browser-tz-offset"></span></p>
+<hr class="dropdown-divider mt-2 mb-2">
+<a class="dropdown-item" href="./user-settings">More
+settings...</a><a class="dropdown-item" href=
+"./admin/dashboard">Admin Dashboard</a></div>
+</li>
+</ul>
+</div>
+<form class="form-inline d-none d-lg-inline" method="post" action=
+"./search" style="width: 325px;" autocomplete="off"><input type=
+"hidden" name="_csrf" value="yJgmZYFV-SYpYSnT79bm0YT0Jn_53p5S3EtA">
+<div class="input-group"><input class="form-control" type="text"
+name="query" placeholder="block height/hash, txid, address"
+autocorrect="off" autocapitalize="off" tabindex="1"></div>
+</form>
+<form class="form-inline d-lg-none w-100 mt-2 mt-md-0" method=
+"post" action="./search"><input type="hidden" name="_csrf" value=
+"yJgmZYFV-SYpYSnT79bm0YT0Jn_53p5S3EtA">
+<div class="input-group"><input class="form-control" type="text"
+name="query" placeholder="height/hash/txid..."></div>
+</form>
+</div>
+</nav>
+<div class="pb-4 pt-3 pt-md-4 bg-main">
+<div class="container px-2 px-sm-3 mb-large">
+<div style="min-height: 500px;">
+<div class="alert alert-primary alert-dismissible shadow-sm mb-4"
+role="alert">
+<h5>Bitcoin Explorer<span class="fw-light">:<span class=
+"fst-italic ms-1">The free, open-source, easy-to-setup,
+easy-to-use, self-hosted explorer</span></span></h5>
+<span class="fw-light">Protect your privacy while enjoying the
+conveniences of public explorers. Made for Bitcoiners by
+Bitcoiners. Enjoy!</span>
+<hr>
+<div class="mt-2"><a class=
+"btn btn-sm btn-primary mb-2 mb-md-1 me-3" href=
+"https://github.com/janoside/btc-rpc-explorer" title=
+"View source code" data-bs-toggle="tooltip" data-bs-placement=
+"bottom">View Source</a><a class=
+"btn btn-sm btn-primary mb-2 mb-md-1 me-3" href=
+"https://donate.bitcoinexplorer.org" target="_blank" title=
+"Support this project with a donation" data-bs-toggle="tooltip"
+data-bs-placement="bottom">Donate</a><a class=
+"btn btn-sm btn-primary mb-2 mb-md-1 me-3" href=
+"https://twitter.com/BitcoinExplorer" target="_blank" title=
+"Follow @BitcoinExplorer on Twitter" data-bs-toggle="tooltip"
+data-bs-placement="bottom">@BitcoinExplorer</a></div>
+<a class="btn-close" href=
+"./changeSetting?name=homepageWelcomeBannerDismissed&amp;value=true"
+aria-label="Close" style="text-decoration: none;" title=
+"Hide this note" data-bs-toggle="tooltip"></a>
+<!--button.btn-close.text-muted(type="button", data-bs-dismiss="alert", aria-label="Close", title="Hide this note", data-bs-toggle="tooltip")--></div>
+<div class="clearfix">
+<div class="float-start">
+<h3 class="h5 mb-1 fw-light d-block">Network Summary</h3>
+</div>
+<div class="float-end"><a class="me-2" href=
+"./changeSetting?name=homepageShowTechDetails&amp;value=true"
+title="Show technical network details" data-bs-toggle="tooltip"
+data-bs-placement="bottom"></a></div>
+</div>
+<div class="mb-section">
+<div class="card mb-section shadow-sm">
+<div class="card-body">
+<!--h1 #{itemCount} #{JSON.stringify(locals.rowCounts)}-->
+<div class=
+"row row-cols-1 summary-row row-cols-sm-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+<div class="col mb-3 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight border-dotted"
+title=
+"The average hashrate of the global mining network over the last 7 days. A comparison to the 30-day average is included to help gauge the rate of change."
+data-bs-toggle="tooltip" data-bs-html="true">7d
+Hashrate</span></div>
+<div class="lead text-start text-md-center"><span class=
+"me-1">495.6</span><span class="small text-muted border-dotted"
+title="EH = exa-hash (x10^18)" data-bs-toggle=
+"tooltip">EH/s</span><span class=
+"text-tiny text-muted ms-2">(<span class="border-dotted" title=
+"7d hashrate vs 30d hashrate." data-bs-toggle=
+"tooltip"><span class="text-success">+2.63%</span></span>)</span></div>
+</div>
+<div class="col mb-3 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight border-dotted"
+title=
+"Details about when the next block subsidy halving will occur"
+data-bs-toggle="tooltip" data-bs-html="true">Next
+Halving</span><small><a class="ms-2" href="./next-halving"
+data-bs-toggle="tooltip" title=
+"View next halving details"></a></small></div>
+<div class="lead text-start text-md-center"><span class=
+"border-dotted" title="19,870 blocks left, 90.5% complete"
+data-bs-toggle="tooltip">19K</span><small class=
+"text-muted ms-2">(<span class="border-dotted" title=
+"4mo, 16d (138 d) &lt;br/&gt; 2024-04-23, 10:40:41 utc"
+data-bs-toggle="tooltip" data-bs-html=
+"true"><span>+</span><span>4.5mo</span></span>)</small>
+<div class="progress mt-1 mx-lg-6 me-6" style="height: 5px;" role=
+"progressbar" aria-label="Difficulty adjustment progress"
+aria-valuenow="91" aria-valuemin="0" aria-valuemax="100">
+<div class="progress-bar" style="width: 91%"></div>
+</div>
+</div>
+</div>
+<div class="col mb-3 mb-sm-4 mb-md-4 mb-lg-4 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Difficulty</span><small><a class=
+"ms-2" href="./difficulty-history" data-bs-toggle="tooltip" title=
+"View difficulty history"></a></small></div>
+<div class="lead text-start text-md-center"><span class=
+"border-dotted" title="67,957,790,298,897.88" data-bs-toggle=
+"tooltip"><span>67.958</span> <span>x
+10</span><sup>12</sup></span><span class=
+"text-tiny text-muted ms-2">(<span class="border-dotted" title=
+"The current difficulty is an All-Time High!" data-bs-toggle=
+"tooltip"><span class=
+"text-success">ATH</span></span>)</span></div>
+</div>
+<div class="col mb-3 mb-sm-4 mb-md-0 mb-lg-4 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight border-dotted"
+title=
+"Estimate for the difficulty adjustment that will occur in 382 blocks (~2.7 days). This is calculated using the average block time during the current difficulty epoch (currently, the last 1,634 blocks). Note: This estimate becomes more reliable as the difficulty epoch nears its end."
+data-bs-toggle="tooltip" data-bs-html="true">Difficulty
+Δ</span></div>
+<div class="lead text-start text-md-center"><span class=
+"text-danger">-0.73<small class="ms-1">%</small></span><span class=
+"text-tiny text-muted ms-2">(<span class="border-dotted" title=
+"382 blocks / 81.1% done" data-bs-toggle="tooltip">~2.7
+days</span>)</span>
+<div class="progress mt-1 mx-lg-6 me-6" style="height: 5px;" role=
+"progressbar" aria-label="Difficulty adjustment progress"
+aria-valuenow="81" aria-valuemin="0" aria-valuemax="100">
+<div class="progress-bar" style="width: 81%"></div>
+</div>
+</div>
+</div>
+<div class="col mb-0 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Coins</span></div>
+<div class="lead text-start text-md-center">
+<span>19,563,080.532</span><span class=
+"text-tiny ms-2 text-muted">(<span class="border-dotted" title=
+"93.15834% have been mined into circulation" data-bs-toggle=
+"tooltip">93.15%</span>)</span></div>
+</div>
+</div>
+<hr class="mt-3 mb-3">
+<!--h1 #{itemCount} #{JSON.stringify(locals.rowCounts)}-->
+<div class=
+"row row-cols-1 summary-row row-cols-sm-1 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+<div class="col mb-3 mb-sm-4 mb-md-0 mb-lg-0 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight border-dotted"
+title=
+"The number of unconfirmed transactions in your node's mempool, and the number of blocks needed to confirm those transactions"
+data-bs-toggle="tooltip" data-bs-html=
+"true">Mempool</span><small><a class="ms-2" href=
+"./mempool-summary" data-bs-toggle="tooltip" title=
+"View mempool summary details"></a></small></div>
+<div class="lead text-start text-md-center"><span class=
+"text-danger">16,704</span><span class=
+"text-tiny text-muted ms-1">tx</span><span class=
+"small text-muted ms-2">(<span class="border-dotted" title=
+"Number of blocks needed to clear your node's mempool."
+data-bs-toggle="tooltip"><span class=
+"text-success">7.93</span></span>)</span></div>
+</div>
+<!--h1 #{itemCount} #{JSON.stringify(locals.rowCounts)}-->
+<div class=
+"row row-cols-1 summary-row row-cols-sm-1 row-cols-md-NaN row-cols-lg-NaN row-cols-xl-NaN">
+<div class="col mb-3 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight border-dotted"
+title=
+"A prediction for what transactions will be included in the next block, yet to be mined. Built from &quot;getblocktemplate&quot;."
+data-bs-toggle="tooltip" data-bs-html="true">Next
+Block</span><small><a class="ms-2" href="./next-block"
+data-bs-toggle="tooltip" title=
+"View next block details"></a></small></div>
+<div class="lead text-start text-md-center">
+<div id="index-next-block">
+<div class="text-center text-reset pb-4">
+<div class="mt-2"></div>
+<div class="spinner-border spinner-border-sm"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col mb-3 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+<!--span.text-danger (#{JSON.stringify(locals.rowCounts)})-->
+<div class="text-start text-md-center"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight border-dotted me-2"
+title=
+"The recommended fee rate to target confirmation in 1, 6, 144 blocks"
+data-bs-toggle="tooltip" data-bs-html="true">Smart
+Fees</span><small class=
+"text-card-highlight fw-light">(<span data-bs-toggle="tooltip"
+data-bs-html="true">sat/vB</span>)</small></div>
+<div class="lead text-start text-md-center">267<span class=
+"text-tiny text-muted ms-1">(asap)</span><span class=
+"mx-2 text-muted">/</span>95<span class=
+"text-tiny text-muted ms-1">(hr)</span><span class=
+"mx-2 text-muted">/</span>24<span class=
+"text-tiny text-muted ms-1">(day)</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="d-flex justify-content-between">
+<div>
+<h3 class="h5 mb-1 fw-light d-block">Latest Blocks</h3>
+</div>
+<div><a class="small ms-2" href="./blocks">Browse blocks
+»</a></div>
+</div>
+<div class="mb-section">
+<div class="card mb-section shadow-sm">
+<div class="card-body">
+<div class="table-responsive">
+<table class="table table-borderless table-striped mb-0">
+<thead>
+<tr><!--th-->
+<th class="text-end text-card-highlight fw-normal text-uppercase">
+Height</th>
+<!--if (!hideTimestampColumn)-->
+<th class=
+"text-end text-card-highlight fw-normal text-uppercase d-none d-md-table-cell">
+<span class="border-dotted" title="Timestamp of the block."
+data-bs-toggle="tooltip">Time</span></th>
+<th class="text-end text-card-highlight fw-normal text-uppercase">
+Age</th>
+<th class=
+"text-end text-card-highlight fw-normal text-uppercase d-none d-sm-table-cell">
+<span class="border-dotted" title=
+"&lt;b&gt;Time To Mine&lt;/b&gt;&lt;br/&gt;The time it took to mine this block after the previous block. &lt;span class='text-success'&gt;Fast&lt;/span&gt; blocks (&lt; 5min) and &lt;span class='text-danger'&gt;Slow&lt;/span&gt; blocks (&gt; 15min) are highlighted."
+data-bs-toggle="tooltip" data-bs-html="true">TTM</span></th>
+<th class=
+"text-start text-card-highlight fw-normal text-uppercase">
+Miner</th>
+<th class="text-end text-card-highlight fw-normal text-uppercase">
+<span class="border-dotted" title=
+"The number of transactions included in each block."
+data-bs-toggle="tooltip">N(tx)</span></th>
+<th class=
+"text-end text-card-highlight fw-normal text-uppercase d-none d-lg-table-cell">
+<span class="border-dotted" title=
+"The total output of all transactions in each block."
+data-bs-toggle="tooltip">Volume</span></th>
+<th class=
+"text-end text-card-highlight fw-normal text-uppercase d-none d-md-table-cell">
+<span class="border-dotted" title=
+"The min/avg/max fee rates (sat/vB) for transactions in this block."
+data-bs-toggle="tooltip">Fee Rates</span></th>
+<th class=
+"text-end text-card-highlight fw-normal text-uppercase d-none d-lg-table-cell">
+Σ Fees</th>
+<!--th.text-end Size (kB)-->
+<th class=
+"text-end text-card-highlight fw-normal text-uppercase d-none d-lg-table-cell">
+% Full</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820130">820,130</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 10:00:24 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>10:00<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span class="text-danger border-dotted" title=
+"It's been &gt; 15 min since this latest block." data-bs-toggle=
+"tooltip"><span>46m</span></span></td>
+<td class="text-end d-none d-sm-table-cell"><span class=
+"text-success"><span>2:58</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+</td>
+<td class="text-end">4,688</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1,117</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">10,</span><span class="me-1">139,</span><span>983</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1.3896</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820129">820,129</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 09:57:26 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>09:57<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>49m</span></td>
+<td class="text-end d-none d-sm-table-cell"><span class=
+"text-success"><span>3:19</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+</td>
+<td class="text-end">5,210</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>4,952</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">54,</span><span class="me-1">150,</span><span>4463</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1.4970</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820128">820,128</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 09:54:07 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>09:54<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>52m</span></td>
+<td class="text-end d-none d-sm-table-cell">
+<span><span>7:33</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: payout address 18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX">ViaBTC</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: payout address 18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX">ViaBTC</span></div>
+</td>
+<td class="text-end">4,371</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>4,356</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">5,</span><span class="me-1">178,</span><span>1299</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1.7823</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820127">820,127</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 09:46:34 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>09:46<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>1h</span></td>
+<td class="text-end d-none d-sm-table-cell"><span class=
+"text-danger"><span>44:47</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+</td>
+<td class="text-end">3,449</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>22,401</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">2,</span><span class="me-1">235,</span><span>8001</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>2.3485</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820126">820,126</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 09:01:47 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>09:01<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>1h</span><span class=
+"ms-1">45m</span></td>
+<td class="text-end d-none d-sm-table-cell"><span class=
+"text-success"><span>2:00</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+</td>
+<td class="text-end">2,847</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1,446</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">5,</span><span class="me-1">70,</span><span>6201</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>0.6991</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820125">820,125</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 08:59:47 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>08:59<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>1h</span><span class=
+"ms-1">47m</span></td>
+<td class="text-end d-none d-sm-table-cell">
+<span><span>11:10</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag '🐟'">F2Pool</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag '🐟'">F2Pool</span></div>
+</td>
+<td class="text-end">3,613</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>5,608</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">2,</span><span class="me-1">108,</span><span>1232</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1.0822</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820124">820,124</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 08:48:37 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>08:48<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>1h</span><span class=
+"ms-1">58m</span></td>
+<td class="text-end d-none d-sm-table-cell">
+<span><span>6:35</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Foundry USA Pool'">Foundry
+USA</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Foundry USA Pool'">Foundry
+USA</span></div>
+</td>
+<td class="text-end">3,297</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>3,695</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">1,</span><span class="me-1">88,</span><span>2447</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>0.8853</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820123">820,123</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 08:42:02 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>08:42<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>2h</span><span class=
+"ms-1">4m</span></td>
+<td class="text-end d-none d-sm-table-cell">
+<span><span>14:25</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+</td>
+<td class="text-end">4,096</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>6,682</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">19,</span><span class="me-1">116,</span><span>1118</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1.1581</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820122">820,122</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 08:27:37 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>08:27<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>2h</span><span class=
+"ms-1">19m</span></td>
+<td class="text-end d-none d-sm-table-cell"><span class=
+"text-danger"><span>16:18</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: payout address 18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX">ViaBTC</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: payout address 18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX">ViaBTC</span></div>
+</td>
+<td class="text-end">3,647</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>5,761</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">2,</span><span class="me-1">121,</span><span>2447</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>1.2131</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+<tr>
+<td class="text-end"><a href=
+"./block-height/820121">820,121</a></td>
+<!--if (!hideTimestampColumn)-->
+<td class="text-end d-none d-md-table-cell"><span class=
+"border-dotted" title="2023-12-07, 08:11:19 utc" data-bs-toggle=
+"tooltip" data-bs-html="true"><span>08:11<span class=
+"text-tiny text-tight-spacing fw-light ms-tiny">UTC</span></span></span></td>
+<td class="text-end"><span>2h</span><span class=
+"ms-1">35m</span></td>
+<td class="text-end d-none d-sm-table-cell"><span class=
+"text-success"><span>2:38</span></span></td>
+<td class="text-start">
+<div class="d-inline d-sm-none"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+<div class="d-none d-sm-inline"><span class="badge bg-primary"
+data-bs-toggle="tooltip" data-bs-html="true" title=
+"Identified by: coinbase tag 'Mined by AntPool'">AntPool</span></div>
+</td>
+<td class="text-end">4,101</td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>4,511</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-md-table-cell"><span class=
+"me-1">10,</span><span class="me-1">85,</span><span>956</span>
+<!-- idea: show typical tx fee, maybe also optimized fee if not segwit--></td>
+<td class="text-end d-none d-lg-table-cell">
+<!--span #{JSON.stringify(parts)}--><span>0.8576</span><span class=
+"text-tiny text-tight-spacing fw-light ms-1">BTC</span></td>
+<td class="text-end d-none d-lg-table-cell"><span class=
+"text-success">99+</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<h3 class="h5 mb-1 fw-light d-block">Tools</h3>
+<div class="mb-section">
+<div class="card mb-section shadow-sm">
+<div class="card-body">
+<div><!-- xs-->
+<div class="d-block d-sm-none" id="tools-1-col">
+<div class="row">
+<div class="col">
+<ul class="list-unstyled mb-3">
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Basics</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./node-details">Node Details</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Node basics (version, uptime, etc)</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./blocks">Browse Blocks</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse all blocks in the blockchain.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Mempool</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mempool-summary">Mempool Summary</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Detailed summary of the current mempool for this node.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./next-block">Next Block</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View a prediction for the next block, based on the current
+mempool.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mempool-transactions">Browse Mempool</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse unconfirmed/pending transactions.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Analysis</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mining-summary">Mining Summary</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary of recent data about miners.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./utxo-set">UTXO Set</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View the latest UTXO Set.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./block-stats">Block Stats</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary data for blocks in configurable range.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./block-analysis">Block Analysis</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary analysis for all transactions in a block.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./difficulty-history">Difficulty History</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Details of difficulty changes over time.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./tx-stats">Transaction Stats</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>See graphs of total transaction volume and transaction
+rates.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./next-halving">Next Halving</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Estimated details about the next halving.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Technical</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./api/docs">API</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View docs for the public API.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./rpc-browser">RPC Browser</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse the RPC functionality of this node. See docs and execute
+commands.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./rpc-terminal">RPC Terminal</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Directly execute RPCs against this node.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./peers">Peers</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Details about the peers connected to this node.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Fun</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./fun">Bitcoin Fun</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated fun/interesting historical blockchain data.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./quotes">Quotes</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated list of Bitcoin-related quotes.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./holidays">Holidays</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated list of Bitcoin 'Holidays'.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./bitcoin-whitepaper">Whitepaper Extractor</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Extract the Bitcoin whitepaper from data embedded within the
+blockchain.</p>
+</div>
+</div>
+</ul>
+</div>
+</div>
+</div>
+<!-- sm, md, lg-->
+<div class="d-none d-sm-block d-xl-none" id="tools-2-col">
+<div class="row">
+<div class="col">
+<ul class="list-unstyled mb-3">
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Basics</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./node-details">Node Details</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Node basics (version, uptime, etc)</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./blocks">Browse Blocks</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse all blocks in the blockchain.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Mempool</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mempool-summary">Mempool Summary</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Detailed summary of the current mempool for this node.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./next-block">Next Block</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View a prediction for the next block, based on the current
+mempool.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mempool-transactions">Browse Mempool</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse unconfirmed/pending transactions.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Fun</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./fun">Bitcoin Fun</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated fun/interesting historical blockchain data.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./quotes">Quotes</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated list of Bitcoin-related quotes.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./holidays">Holidays</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated list of Bitcoin 'Holidays'.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./bitcoin-whitepaper">Whitepaper Extractor</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Extract the Bitcoin whitepaper from data embedded within the
+blockchain.</p>
+</div>
+</div>
+</ul>
+</div>
+<div class="col">
+<ul class="list-unstyled mb-3">
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Analysis</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mining-summary">Mining Summary</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary of recent data about miners.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./utxo-set">UTXO Set</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View the latest UTXO Set.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./block-stats">Block Stats</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary data for blocks in configurable range.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./block-analysis">Block Analysis</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary analysis for all transactions in a block.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./difficulty-history">Difficulty History</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Details of difficulty changes over time.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./tx-stats">Transaction Stats</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>See graphs of total transaction volume and transaction
+rates.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./next-halving">Next Halving</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Estimated details about the next halving.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Technical</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./api/docs">API</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View docs for the public API.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./rpc-browser">RPC Browser</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse the RPC functionality of this node. See docs and execute
+commands.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./rpc-terminal">RPC Terminal</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Directly execute RPCs against this node.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./peers">Peers</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Details about the peers connected to this node.</p>
+</div>
+</div>
+</ul>
+</div>
+</div>
+</div>
+<!-- xl, xxl-->
+<div class="d-none d-xl-block" id="tools-3-col">
+<div class="row">
+<div class="col">
+<ul class="list-unstyled mb-3">
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Basics</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./node-details">Node Details</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Node basics (version, uptime, etc)</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./blocks">Browse Blocks</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse all blocks in the blockchain.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Mempool</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mempool-summary">Mempool Summary</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Detailed summary of the current mempool for this node.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./next-block">Next Block</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View a prediction for the next block, based on the current
+mempool.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mempool-transactions">Browse Mempool</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse unconfirmed/pending transactions.</p>
+</div>
+</div>
+</ul>
+</div>
+<div class="col">
+<ul class="list-unstyled mb-3">
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Analysis</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./mining-summary">Mining Summary</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary of recent data about miners.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./utxo-set">UTXO Set</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View the latest UTXO Set.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./block-stats">Block Stats</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary data for blocks in configurable range.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./block-analysis">Block Analysis</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Summary analysis for all transactions in a block.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./difficulty-history">Difficulty History</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Details of difficulty changes over time.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./tx-stats">Transaction Stats</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>See graphs of total transaction volume and transaction
+rates.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./next-halving">Next Halving</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Estimated details about the next halving.</p>
+</div>
+</div>
+</ul>
+</div>
+<div class="col">
+<ul class="list-unstyled mb-3">
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Technical</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./api/docs">API</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>View docs for the public API.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./rpc-browser">RPC Browser</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Browse the RPC functionality of this node. See docs and execute
+commands.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./rpc-terminal">RPC Terminal</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Directly execute RPCs against this node.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./peers">Peers</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Details about the peers connected to this node.</p>
+</div>
+</div>
+<div class="mb-5">
+<div class="mb-3"><span class=
+"fs-6 text-uppercase fw-light text-card-highlight" data-bs-toggle=
+"tooltip" data-bs-html="true">Fun</span>
+<hr></div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./fun">Bitcoin Fun</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated fun/interesting historical blockchain data.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./quotes">Quotes</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated list of Bitcoin-related quotes.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./holidays">Holidays</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Curated list of Bitcoin 'Holidays'.</p>
+</div>
+<div class="clearfix">
+<div class="float-start" style="width: 38px;"></div>
+<div class="float-start">
+<div><a href="./bitcoin-whitepaper">Whitepaper Extractor</a></div>
+</div>
+</div>
+<div class="mt-n1" style="padding-left: 39px;">
+<p>Extract the Bitcoin whitepaper from data embedded within the
+blockchain.</p>
+</div>
+</div>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-bottom: 30px;"></div>
+</div>
+</div>
+<footer class=
+"footer border-top border-primary bg-header-footer pt-3 pb-1 px-3 text-white"
+style="border-width: 5px !important;">
+<div class="container">
+<div class="mb-4 mx-6"><iframe id="quoteIframe" title=
+"A Bitcoin Quote of the Day" src="./snippet/quote/random" onload=
+"iframeLoaded('quoteIframe');" scrolling="no" height="0" style=
+"width: 100%;" name="quoteIframe"></iframe></div>
+<hr>
+<div class="row mt-4 mb-6">
+<div class="col-lg-3">
+<div class="mb-4">
+<h6>Project</h6>
+<div class="ms-2"><a class="footer-link" href=
+"https://github.com/janoside/btc-rpc-explorer">github.com/janoside/btc-rpc-explorer</a>
+<div class="mt-2"><a class=
+"btn btn-primary btn-sm me-3 mb-1 text-decoration-none" href=
+"https://github.com/janoside/btc-rpc-explorer"><span class=
+"badge bg-white text-dark">1317</span></a><a class=
+"btn btn-primary btn-sm me-3 mb-1 text-decoration-none" href=
+"https://github.com/janoside/btc-rpc-explorer/fork"><span class=
+"badge bg-white text-dark">1070</span></a></div>
+</div>
+</div>
+</div>
+<div class="col-lg-3">
+<div class="mb-4">
+<h6>App Details</h6>
+<div class="ms-2"><span>version: 3.4.0</span><br>
+<span>commit: <a class="footer-link" href=
+"https://github.com/janoside/btc-rpc-explorer/commit/1dbd3d8fc2">1dbd3d8fc2</a></span><br>
+
+<span>released: 2023-06-14</span> <span style=
+"font-size: 0.9em;">(<a class="footer-link" href=
+"./changelog">changelog</a><span>)</span></span></div>
+</div>
+</div>
+<div class="col-lg-3">
+<div class="mb-4">
+<h6>Public Demos</h6>
+<div class="ms-2"><a class="footer-link" href=
+"https://be.anyone.eu.org">https://be.anyone.eu.org</a><br>
+<a class="footer-link" href=
+"http://btcexpz7xlwrqknqw6p3bok6shf73qtkd6zxct4x4qta2ktvh7ntprad.onion"
+title="Tor v3 Hidden Service" data-bs-toggle=
+"tooltip">btcexp….onion</a><span class="ms-1">(tor
+v3)</span><small class="ms-2"><a href="javascript:void(0)" title=
+"Copy" data-clipboard-text=
+"http://btcexpz7xlwrqknqw6p3bok6shf73qtkd6zxct4x4qta2ktvh7ntprad.onion"
+data-bs-toggle="tooltip" onclick=
+"copyTextToClipboard(&quot;http://btcexpz7xlwrqknqw6p3bok6shf73qtkd6zxct4x4qta2ktvh7ntprad.onion&quot;); $(this).attr(&quot;title&quot;, &quot;Copied!&quot;).tooltip(&quot;_fixTitle&quot;).tooltip(&quot;show&quot;); $(this).mouseleave(function() { $(this).tooltip(&quot;hide&quot;); $(this).attr(&quot;data-bs-original-title&quot;, &quot;Copy&quot;); });"></a></small>
+<div class="mt-2"><a class="me-2" href="https://be.anyone.eu.org"
+title="Bitcoin" data-bs-toggle="tooltip"><img src=
+"./img/network-mainnet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt=
+"Bitcoin" style="width: 40px; height: 40px;"></a><a class="me-2"
+href="https://testnet.bitcoinexplorer.org" title="Testnet"
+data-bs-toggle="tooltip"><img src=
+"./img/network-testnet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt=
+"Testnet" style="width: 40px; height: 40px;"></a><a class="me-2"
+href="https://ex.signet.bublina.eu.org" title="Signet"
+data-bs-toggle="tooltip"><img src=
+"./img/network-signet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt=
+"Signet" style="width: 40px; height: 40px;"></a></div>
+</div>
+</div>
+</div>
+<div class="col-lg-3">
+<div class="mb-4">
+<h6>Links</h6>
+<div class="ms-2"><span style="font-size: 1.5rem;"><a class=
+"text-white mb-1 me-3" href=
+"https://github.com/janoside/btc-rpc-explorer" title=
+"View source code" data-bs-toggle="tooltip"></a><a class=
+"text-danger mb-1 me-3" href="https://donate.bitcoinexplorer.org"
+target="_blank" title="Support this project with a donation"
+data-bs-toggle="tooltip"></a><a class="text-white mb-1" href=
+"https://twitter.com/BitcoinExplorer" target="_blank" title=
+"Follow @BitcoinExplorer on Twitter" data-bs-toggle=
+"tooltip"></a></span></div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script src="./js/jquery.min.js?v=2023-06-14-1dbd3d8fc2" integrity=
+"sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+crossorigin="anonymous"></script>
+<script src="./js/bootstrap.bundle.min.js?v=2023-06-14-1dbd3d8fc2"
+integrity=
+"sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+crossorigin="anonymous"></script>
+<script src="./js/site.js?v=2023-06-14-1dbd3d8fc2" integrity=
+"sha384-G8o2io5zIdQiiVN+4CAGGXPO4UvV8jGkSMlfddSPbqIUd3x5Rv01pNH6ec8QOATu"
+crossorigin="anonymous"></script>
+<script>
+var serverTzOffset = "0";
+var browserTzOffset = "0";
+var currentBrowserTzOffset = (new Date().getTimezoneOffset() / 60).toString();
+var userTzOffset = "unset";
+
+document.addEventListener("DOMContentLoaded", function(event) {''
+        enableTooltipsAndPopovers();
+
+        onLoad_tabSelection();
+
+        //console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        console.log("Manual TZ Offset: " + userTzOffset);
+        console.log("Browser TZ Offset: " + browserTzOffset);
+
+        var displayTz = -1 * browserTzOffset;
+        $("#browser-tz-offset").text(`${displayTz >= 0 ? "+" : ""}${displayTz} hr`);
+
+        if (browserTzOffset != currentBrowserTzOffset) {
+                browserTzOffset = currentBrowserTzOffset;
+
+                $.get(`./changeSetting?name=browserTzOffset&value=${browserTzOffset}`, function(data) {
+                        console.log("Browser timezone saved.");
+
+                        if (userTzOffset == "unset") {
+                                $(".date-text").each((i, obj) => {
+                                        var timestampUtc = $(obj).attr("data-timestamp-utc");
+                                        var includeAgo = $(obj).attr("data-date-ago");
+                                        var formatStr = $(obj).attr("data-date-format");
+                                        if (formatStr) {
+                                                formatStr = `&formatString=${formatStr}`;
+                                        }
+                                        
+                                        $.get(`./snippet/timestamp?timestamp=${timestampUtc}&includeAgo=${includeAgo}${formatStr}`, function(data) {
+                                                $(obj).html(data);
+
+                                                enableTooltipsAndPopovers();
+                                        });
+                                });
+                        }
+                });
+        }
+});
+</script>
+<script>
+var perfId = "eOaRCJbhM0X7";
+
+console.log(`Performance ID: ${perfId}`);
+</script>
+<script>
+$(document).ready(function() {
+        $.get("./snippet/next-block", function(data) {
+                $("#index-next-block").html(data);
+                enableTooltipsAndPopovers();
+        });
+});
+</script>
+</body>
+</html>

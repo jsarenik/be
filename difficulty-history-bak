@@ -1,0 +1,431 @@
+<!-- options keys:--><!-- 		- blockHeightsByTxid--><!-- 		- sharedBlockHeight (int)--><!-- 		- showDates (true|false)--><!-- 		- highlightAddress (address)--><!-- 		- addrGainsByTxid (map)--><!-- 		- addrLossesByTxid (map)--><!-- 		- mempoolDetailsByTxid (map)--><!-- txBlockHeightsByTxid_orSharedBlockHeight, showDates=false, highlightAddress, addrGainsByTxid, addrLossesByTxid)--><!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><base href="/"><meta name="csrf-token" content="WOw5goAH-OicdgAgk84-KCjiz5EeVeEAKqAY"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no"><meta name="description" content="Open-source, easy-to-use, educational Bitcoin explorer whose only dependency is your Bitcoin Core node."><link rel="stylesheet" href="./style/highlight.min.css?v=2023-06-14-1dbd3d8fc2" integrity="sha384-s4RLYRjGGbVqKOyMGGwfxUTMOO6D7r2eom7hWZQ6BjK2Df4ZyfzLXEkonSm0KLIQ" crossorigin="anonymous"><link id="dark-v1-theme-link-tag" href="./style/dark-v1.min.css?v=2023-06-14-1dbd3d8fc2" integrity="sha384-N4vpIzX+w8OiVt/PRWfSTxIBA/r/2wp/9H3d3Qxmb/6woHCt9/HZQl9Nc3XByIqU" crossorigin="anonymous"/><link id="light-theme-link-tag" href="./style/light.min.css?v=2023-06-14-1dbd3d8fc2" integrity="sha384-oFtx78mBk7Y/IOR4rl1Ij5Wf3/5FnXjwqcmvYpdvI/piekQkeaq72KSZjWUc3Uaw" crossorigin="anonymous"/><link id="dark-theme-link-tag" rel="stylesheet" href="./style/dark.min.css?v=2023-06-14-1dbd3d8fc2" integrity="sha384-CZz6XiKcNpqio2wvNlCOZ/wEbjjS0Z7W7+zn6bzl5kfs5VS9nFi/jzIAxIobXrtg" crossorigin="anonymous"/><style>@font-face {
+	font-family: "bootstrap-icons";
+
+	src:	url("./font/bootstrap-icons.woff2?v=2023-06-14-1dbd3d8fc2") format("woff2"),
+			url("./font/bootstrap-icons.woff?v=2023-06-14-1dbd3d8fc2") format("woff");
+}
+</style><link rel="stylesheet" href="./style/bootstrap-icons.css?v=2023-06-14-1dbd3d8fc2" integrity="sha384-rJFhkIguED0Z4GX6r6ReHpTCkwWtiPHZnQtWVP0DQWcKHzeJAlYb1m/xdYkeEk+f" crossorigin="anonymous"/><link id="canonical" rel="canonical" href="https://be.anyone.eu.org"><meta property="og:title" content="BitcoinExplorer.org - Open-Source Bitcoin Explorer"><meta property="og:description" content="Open-source, easy-to-use, educational Bitcoin explorer whose only dependency is your Bitcoin Core node."><meta property="og:image" content="https://bitcoinexplorer.org/img/preview.png"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:site" content="@BitcoinExplorer"><meta property="twitter:creator" content="@BitcoinExplorer"><meta property="twitter:title" content="BitcoinExplorer.org"><meta property="twitter:description" content="Open-source, easy-to-use, educational Bitcoin explorer whose only dependency is your Bitcoin Core node."><meta property="twitter:image:src" content="https://bitcoinexplorer.org/img/preview.png"><meta property="twitter:domain" content="bitcoinexplorer.org"><link rel="apple-touch-icon" sizes="180x180" href="./img/network-mainnet/apple-touch-icon.png?v=2023-06-14-1dbd3d8fc2"><link rel="icon" type="image/png" sizes="32x32" href="./img/network-mainnet/favicon-32x32.png?v=2023-06-14-1dbd3d8fc2"><link rel="icon" type="image/png" sizes="16x16" href="./img/network-mainnet/favicon-16x16.png?v=2023-06-14-1dbd3d8fc2"><link rel="manifest" href="./img/network-mainnet/site.webmanifest"><link rel="mask-icon" href="./img/network-mainnet/safari-pinned-tab.svg" color="#f7931a"><link rel="shortcut icon" href="./img/network-mainnet/favicon.ico?v=2023-06-14-1dbd3d8fc2"><meta name="apple-mobile-web-app-title" content="BTC Explorer"><meta name="application-name" content="BTC Explorer"><meta name="msapplication-TileColor" content="#022e70"><meta name="msapplication-config" content="./img/network-mainnet/browserconfig.xml"><meta name="theme-color" content="#022e70"><!-- debug as if we're in privacy mode (which means we don't have exchange rate data)--><!-- debug as if we're in performance protection mode (which means we don't calculate UTXO set details)--><!-- debug as if we don't have result.blockstats (applies to block pages when node version < 0.17.0)--><!--if (result)--><!--	- result.blockstats = null;--><!-- no networkVolume--><title>Difficulty History</title></head><body class="bg-header-footer"><nav class="navbar navbar-expand-md navbar-dark bg-header-footer"><div class="container"><a class="navbar-brand" href="./"><span><img class="header-image" src="./img/network-mainnet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt="logo"><span class="fw-light">Bitcoin</span></span></a><button class="navbar-toggler navbar-toggler-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="collapse navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav me-auto"></ul><ul class="navbar-nav"><li class="nav-item dropdown me-0 me-md-2 mt-2 mt-md-0 text-center text-md-start"><a class="nav-link rounded bg-header-footer-highlight text-white dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi-tools me-2 ms-1"></i></a><div class="dropdown-menu dropdown-menu-end shadow" aria-label="Tools Items"><span class="dropdown-header">Basics</span><a class="dropdown-item" href="./node-details"><i class="bi-info-circle" style="width: 20px; margin-right: 10px;"></i><span> Node Details</span></a><a class="dropdown-item" href="./blocks"><i class="bi-boxes" style="width: 20px; margin-right: 10px;"></i><span> Browse Blocks</span></a><hr class="dropdown-divider mt-2 mb-1"><span class="dropdown-header">Mempool</span><a class="dropdown-item" href="./mempool-summary"><i class="bi-hourglass-split" style="width: 20px; margin-right: 10px;"></i><span> Mempool Summary</span></a><a class="dropdown-item" href="./next-block"><i class="bi-minecart-loaded" style="width: 20px; margin-right: 10px;"></i><span> Next Block</span></a><a class="dropdown-item" href="./mempool-transactions"><i class="bi-book" style="width: 20px; margin-right: 10px;"></i><span> Browse Mempool</span></a><hr class="dropdown-divider mt-2 mb-1"><span class="dropdown-header">Analysis</span><a class="dropdown-item" href="./mining-summary"><i class="bi-hammer" style="width: 20px; margin-right: 10px;"></i><span> Mining Summary</span></a><a class="dropdown-item" href="./utxo-set"><i class="bi-list-columns" style="width: 20px; margin-right: 10px;"></i><span> UTXO Set</span></a><a class="dropdown-item" href="./block-stats"><i class="bi-stack" style="width: 20px; margin-right: 10px;"></i><span> Block Stats</span></a><a class="dropdown-item" href="./block-analysis"><i class="bi-chevron-double-down" style="width: 20px; margin-right: 10px;"></i><span> Block Analysis</span></a><a class="dropdown-item" href="./difficulty-history"><i class="bi-clock-history" style="width: 20px; margin-right: 10px;"></i><span> Difficulty History</span></a><a class="dropdown-item" href="./tx-stats"><i class="bi-graph-up" style="width: 20px; margin-right: 10px;"></i><span> Transaction Stats</span></a><a class="dropdown-item" href="./next-halving"><i class="bi-square-half" style="width: 20px; margin-right: 10px;"></i><span> Next Halving</span></a><hr class="dropdown-divider mt-2 mb-1"><span class="dropdown-header">Technical</span><a class="dropdown-item" href="./api/docs"><i class="bi-braces-asterisk" style="width: 20px; margin-right: 10px;"></i><span> API</span></a><a class="dropdown-item" href="./rpc-browser"><i class="bi-journal-text" style="width: 20px; margin-right: 10px;"></i><span> RPC Browser</span></a><a class="dropdown-item" href="./rpc-terminal"><i class="bi-terminal" style="width: 20px; margin-right: 10px;"></i><span> RPC Terminal</span></a><a class="dropdown-item" href="./peers"><i class="bi-diagram-3" style="width: 20px; margin-right: 10px;"></i><span> Peers</span></a><hr class="dropdown-divider mt-2 mb-1"><span class="dropdown-header">Fun</span><a class="dropdown-item" href="./fun"><i class="bi-flag" style="width: 20px; margin-right: 10px;"></i><span> Bitcoin Fun</span></a><a class="dropdown-item" href="./quotes"><i class="bi-chat-quote" style="width: 20px; margin-right: 10px;"></i><span> Quotes</span></a><a class="dropdown-item" href="./holidays"><i class="bi-calendar-heart" style="width: 20px; margin-right: 10px;"></i><span> Holidays</span></a><a class="dropdown-item" href="./bitcoin-whitepaper"><i class="bi-file-earmark-text" style="width: 20px; margin-right: 10px;"></i><span> Whitepaper Extractor</span></a></div></li><li class="nav-item dropdown me-0 me-md-3 mt-2 mt-md-0 text-center text-md-start"><a class="nav-link rounded bg-header-footer-highlight text-white dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="bi-gear me-2 ms-1"></i></a><div class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="navbarDropdown"><span class="dropdown-header">Display Currency</span><div class="btn-group ms-3"><span class="btn btn-primary btn-sm">BTC</span><a class="btn btn-outline-primary btn-sm" href="./changeSetting?name=displayCurrency&amp;value=sat">sat</a></div><hr class="dropdown-divider mt-2 mb-2"><span class="dropdown-header">Theme</span><div class="btn-group ms-3"><a class="btn btn-sm px-3 btn-outline-primary" id="theme-toggler-light" href="javascript:void(0);" onclick="activateTheme('light'); return false;"><i class="bi-sun-fill text-warning"></i></a><a class="btn btn-sm px-3 btn-primary" id="theme-toggler-dark" href="javascript:void(0);" onclick="activateTheme('dark'); return false;"><i class="bi-moon-fill"></i></a><a class="btn btn-sm px-3 btn-outline-primary" id="theme-toggler-dark-v1" href="javascript:void(0);" onclick="activateTheme('dark-v1'); return false;"><i class="bi-moon"></i></a></div><hr class="dropdown-divider mt-2 mb-2"><span class="dropdown-header">Display Timezone</span><div class="btn-group ms-3"><a class="btn btn-sm px-3 btn-primary" href="./changeSetting?name=uiTimezone&amp;value=utc">UTC</a><a class="btn btn-sm px-3 btn-outline-primary" href="./changeSetting?name=uiTimezone&amp;value=local">Local</a></div><p class="px-3 pt-2 small text-muted">"Local" uses your browser's default offset:<span class="badge bg-light text-dark ms-1 border" id="browser-tz-offset"></span><i class="bi-info-circle ms-1" title="This value comes from your brower. If you wish to set a custom offset, you can do so below, in 'More settings...'" data-bs-toggle="tooltip"></i></p><hr class="dropdown-divider mt-2 mb-2"><a class="dropdown-item" href="./user-settings">More settings...</a><a class="dropdown-item" href="./admin/dashboard">Admin Dashboard</a></div></li></ul></div><form class="form-inline d-none d-lg-inline" method="post" action="./search" style="width: 325px;" autocomplete="off"><input type="hidden" name="_csrf" value="WOw5goAH-OicdgAgk84-KCjiz5EeVeEAKqAY"><div class="input-group"><input class="form-control" type="text" name="query" placeholder="block height/hash, txid, address" autocorrect="off" autocapitalize="off" tabindex="1"><button class="btn btn-primary" type="submit" aria-label="Search"><i class="bi-search"></i></button></div></form><form class="form-inline d-lg-none w-100 mt-2 mt-md-0" method="post" action="./search"><input type="hidden" name="_csrf" value="WOw5goAH-OicdgAgk84-KCjiz5EeVeEAKqAY"><div class="input-group"><input class="form-control" type="text" name="query" placeholder="height/hash/txid..."><button class="btn btn-primary" type="submit" aria-label="Search"><i class="bi-search"></i></button></div></form></div></nav><div class="pb-4 pt-3 pt-md-4 bg-main"><div class="container px-2 px-sm-3 mb-large"><div style="min-height: 500px;"><div class="d-flex justify-content-between"><h1 class="fw-light word-wrap mb-1">Difficulty History</h1></div><h4 class="fw-light word-wrap mb-4"></h4><!--hr.mb-3--><div class="alert alert-primary alert-dismissible shadow-sm mb-4 ps-3 ps-md-7" role="alert"><i class="d-none d-md-inline bi-info-circle fs-5 d-inline-block" style="position: absolute; top: 0; left: 0; width: 36px; margin-left: 0.75rem; margin-top: 1.0rem;"></i><h6 class="mb-2">About the Difficulty Adjustment</h6><ul class="mb-0 ms-n3"><li>Mining difficulty adjusts automatically every 2,016 blocks.</li><li>The adjustment aims to maintain an average block-mining time of 10 minutes.</li><li>An increase in the difficulty indicates that the average block-mining time during the previous adjustment epoch was less than 10 minutes (due to more miners joining the network and searching for blocks).</li><li>A decrease in difficulty indicates miners have left the network so finding each block is adjusted to be easier for the smaller number remaining.</li><li>The numeric Difficulty is a multiple of the difficulty of finding the easiest block (Block #0) - e.g. blocks in BTC mainnet epoch 308 are over 16 trillion times harder to mine than those in epoch 0.</li></ul><a class="btn-close" href="./changeSetting?name=diffHistPageNoteDismissed&amp;value=true" aria-label="Close" style="text-decoration: none;" title="Hide this note" data-bs-toggle="tooltip"></a><!--button.btn-close.text-muted(type="button", data-bs-dismiss="alert", aria-label="Close", title="Hide this note", data-bs-toggle="tooltip")--></div><div class="mb-huge" id="progress-wrapper"><div class="card shadow-sm mb-3"><div class="card-body"><span>Loading data: <span id="progress-text"></span></span><div class="progress mt-2" id="progress-bar" style="height: 7px;"><div class="progress-bar" id="data-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div></div></div></div><div id="main-content" style="display: none;"><ul class="nav nav-tabs" id="page-tabs"><li class="nav-item page-tab" style="margin-left: 10px;"><a class="nav-link active" data-bs-toggle="tab" data-default-tab="true" href="#Details" role="tab">Details</a></li><li class="nav-item page-tab"><a class="nav-link" data-bs-toggle="tab" href="#Data" role="tab">Data</a></li></ul><div class="bg-gradient-body-to-main pb-4 mb-2"></div><div class="tab-content"><div class="tab-pane active" id="Details" role="tabpanel"><div class="text-center"><div class="btn-group mb-3"><a class="btn btn-outline-primary diff-hist-selector" id="diff-hist-selector-10000" href="javascript:void(0)" onclick="$('.graph-diff-hist').hide(); $('#graph-diff-hist-10000').show(); $('.graph-diff-change').hide(); $('#graph-diff-change-10000').show(); $(&quot;.diff-hist-selector&quot;).addClass(&quot;btn-outline-primary&quot;).removeClass(&quot;btn-primary&quot;); $(this).toggleClass(&quot;btn-outline-primary&quot;).addClass(&quot;btn-primary&quot;); return false;">All Time</a><a class="btn btn-outline-primary diff-hist-selector" id="diff-hist-selector-8" href="javascript:void(0)" onclick="$('.graph-diff-hist').hide(); $('#graph-diff-hist-8').show(); $('.graph-diff-change').hide(); $('#graph-diff-change-8').show(); $(&quot;.diff-hist-selector&quot;).addClass(&quot;btn-outline-primary&quot;).removeClass(&quot;btn-primary&quot;); $(this).toggleClass(&quot;btn-outline-primary&quot;).addClass(&quot;btn-primary&quot;); return false;">8 yr</a><a class="btn btn-outline-primary diff-hist-selector" id="diff-hist-selector-4" href="javascript:void(0)" onclick="$('.graph-diff-hist').hide(); $('#graph-diff-hist-4').show(); $('.graph-diff-change').hide(); $('#graph-diff-change-4').show(); $(&quot;.diff-hist-selector&quot;).addClass(&quot;btn-outline-primary&quot;).removeClass(&quot;btn-primary&quot;); $(this).toggleClass(&quot;btn-outline-primary&quot;).addClass(&quot;btn-primary&quot;); return false;">4 yr</a><a class="btn btn-outline-primary diff-hist-selector" id="diff-hist-selector-2" href="javascript:void(0)" onclick="$('.graph-diff-hist').hide(); $('#graph-diff-hist-2').show(); $('.graph-diff-change').hide(); $('#graph-diff-change-2').show(); $(&quot;.diff-hist-selector&quot;).addClass(&quot;btn-outline-primary&quot;).removeClass(&quot;btn-primary&quot;); $(this).toggleClass(&quot;btn-outline-primary&quot;).addClass(&quot;btn-primary&quot;); return false;">2 yr</a><a class="btn btn-outline-primary diff-hist-selector" id="diff-hist-selector-1" href="javascript:void(0)" onclick="$('.graph-diff-hist').hide(); $('#graph-diff-hist-1').show(); $('.graph-diff-change').hide(); $('#graph-diff-change-1').show(); $(&quot;.diff-hist-selector&quot;).addClass(&quot;btn-outline-primary&quot;).removeClass(&quot;btn-primary&quot;); $(this).toggleClass(&quot;btn-outline-primary&quot;).addClass(&quot;btn-primary&quot;); return false;">1 yr</a></div></div><div class="row"><div class="col"><h3 class="h5 mb-1 fw-light d-block">Difficulty History</h3><div class="mb-section"><div class="card mb-section shadow-sm"><div class="card-body"><canvas class="graph-diff-hist" id="graph-diff-hist-10000"></canvas><canvas class="graph-diff-hist" id="graph-diff-hist-8"></canvas><canvas class="graph-diff-hist" id="graph-diff-hist-4"></canvas><canvas class="graph-diff-hist" id="graph-diff-hist-2"></canvas><canvas class="graph-diff-hist" id="graph-diff-hist-1"></canvas></div></div></div></div></div><div class="row"> <div class="col"><div class="clearfix"><div class="float-start"><h3 class="h5 mb-1 fw-light d-block">Difficulty Δ</h3></div><div class="float-start"><small class="text-muted ms-2">(%, clamped to ±100%)</small></div></div><div class="mb-section"><div class="card mb-section shadow-sm"><div class="card-body"><canvas class="graph-diff-change" id="graph-diff-change-10000"></canvas><canvas class="graph-diff-change" id="graph-diff-change-8"></canvas><canvas class="graph-diff-change" id="graph-diff-change-4"></canvas><canvas class="graph-diff-change" id="graph-diff-change-2"></canvas><canvas class="graph-diff-change" id="graph-diff-change-1"></canvas></div></div></div></div></div></div><div class="tab-pane" id="Data" role="tabpanel"><div class="row"><div class="col"><h3 class="h5 mb-1 fw-light d-block">Raw Data</h3><div class="mb-section"><div class="card mb-section shadow-sm"><div class="card-body"><div class="table-responsive"><table class="table table-striped table-borderless mb-3"><thead><tr><th class="text-end text-card-highlight text-uppercase fw-light">Epoch</th><th class="text-end text-card-highlight text-uppercase fw-light">Start Block</th><th class="text-end text-card-highlight fw-light"><span class="text-uppercase">Start Date</span><small class="ms-1">(utc)</small></th><!--th Date--><!--th.text-end Block Start--><th class="text-end text-card-highlight text-uppercase fw-light">Difficulty</th><th class="text-end text-card-highlight text-uppercase fw-light">Difficulty Δ<small class="ms-1">(%)</small></th></tr></thead><tbody id="difficulty-table-body"><tr id="difficulty-table-row-prototype" style="display: none;"><td class="text-end data-epoch"></td><td class="text-end data-start-block"></td><td class="text-end data-start-date"></td><!--td.data-date--><!--td.text-end.data-block-start--><td class="text-end data-difficulty"></td><td class="text-end data-difficulty-delta"></td></tr><tr id="empty-row-to-fix-striped-coloring" style="display: none;"></tr></tbody></table></div></div></div></div></div></div></div></div></div></div><div style="margin-bottom: 30px;"></div></div></div><footer class="footer border-top border-primary bg-header-footer pt-3 pb-1 px-3 text-white" style="border-width: 5px !important;"><div class="container"><div class="mb-4 mx-6"><iframe id="quoteIframe" title="A Bitcoin Quote of the Day" src="./snippet/quote/random" onload="iframeLoaded('quoteIframe');" scrolling="no" height="0" style="width: 100%;"></iframe></div><hr><div class="row mt-4 mb-6"><div class="col-lg-3"><div class="mb-4"><h6>Project</h6><div class="ms-2"><a class="footer-link" href="https://github.com/janoside/btc-rpc-explorer">github.com/janoside/btc-rpc-explorer</a><div class="mt-2"><a class="btn btn-primary btn-sm me-3 mb-1 text-decoration-none" href="https://github.com/janoside/btc-rpc-explorer"><i class="bi-star-fill text-warning me-2"></i><span class="badge bg-white text-dark">1317</span></a><a class="btn btn-primary btn-sm me-3 mb-1 text-decoration-none" href="https://github.com/janoside/btc-rpc-explorer/fork"><i class="bi-bezier2 me-2"></i><span class="badge bg-white text-dark">1070</span></a></div></div></div></div><div class="col-lg-3"><div class="mb-4"><h6>App Details</h6><div class="ms-2"><span>version: 3.4.0</span><br><span>commit: <a class="footer-link" href="https://github.com/janoside/btc-rpc-explorer/commit/1dbd3d8fc2">1dbd3d8fc2</a></span><br><span>released: 2023-06-14</span><span style="font-size: 0.9em;"> (<a class="footer-link" href="./changelog">changelog</a><span>)</span></span></div></div></div><div class="col-lg-3"><div class="mb-4"><h6>Public Demos</h6><div class="ms-2"><a class="footer-link" href="https://be.anyone.eu.org">https://be.anyone.eu.org</a><br><a class="footer-link" href="http://btcexpz7xlwrqknqw6p3bok6shf73qtkd6zxct4x4qta2ktvh7ntprad.onion" title="Tor v3 Hidden Service" data-bs-toggle="tooltip">btcexp….onion</a><span class="ms-1">(tor v3)</span><small class="ms-2"><a href="javascript:void(0)" title="Copy" data-clipboard-text="http://btcexpz7xlwrqknqw6p3bok6shf73qtkd6zxct4x4qta2ktvh7ntprad.onion" data-bs-toggle="tooltip"><i class="bi-clipboard2 text-info"></i></a></small><div class="mt-2"><a class="me-2" href="https://be.anyone.eu.org" title="Bitcoin" data-bs-toggle="tooltip"><img src="./img/network-mainnet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt="Bitcoin" style="width: 40px; height: 40px;"></a><a class="me-2" href="https://testnet.bitcoinexplorer.org" title="Testnet" data-bs-toggle="tooltip"><img src="./img/network-testnet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt="Testnet" style="width: 40px; height: 40px;"></a><a class="me-2" href="https://ex.signet.bublina.eu.org" title="Signet" data-bs-toggle="tooltip"><img src="./img/network-signet/logo.svg?v=2023-06-14-1dbd3d8fc2" alt="Signet" style="width: 40px; height: 40px;"></a></div></div></div></div><div class="col-lg-3"><div class="mb-4"><h6>Links</h6><div class="ms-2"><span style="font-size: 1.5rem;"><a class="text-white mb-1 me-3" href="https://github.com/janoside/btc-rpc-explorer" title="View source code" data-bs-toggle="tooltip"><i class="bi-git"></i></a><a class="text-danger mb-1 me-3" href="https://donate.bitcoinexplorer.org" target="_blank" title="Support this project with a donation" data-bs-toggle="tooltip"><i class="bi-heart-fill text-danger"></i></a><a class="text-white mb-1" href="https://twitter.com/BitcoinExplorer" target="_blank" title="Follow @BitcoinExplorer on Twitter" data-bs-toggle="tooltip"><i class="bi-twitter text-twitter"></i></a></span></div></div></div></div></div></footer><script src="./js/jquery.min.js?v=2023-06-14-1dbd3d8fc2" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script><script src="./js/bootstrap.bundle.min.js?v=2023-06-14-1dbd3d8fc2" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script><script src="./js/site.js?v=2023-06-14-1dbd3d8fc2" integrity="sha384-+oXWKXwPD9Fyf6EYrFPvPAPGVsB7INqoVZhse4PVoWQYgCsJ5M9bI0YWIsgYT0NR" crossorigin="anonymous"></script><script>var serverTzOffset = "0";
+var browserTzOffset = "0";
+var currentBrowserTzOffset = (new Date().getTimezoneOffset() / 60).toString();
+var userTzOffset = "unset";
+//var userTzOffset = "0";
+
+document.addEventListener("DOMContentLoaded", function(event) {''
+	enableTooltipsAndPopovers();
+
+	onLoad_tabSelection();
+
+	//console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+	console.log("Manual TZ Offset: " + userTzOffset);
+	console.log("Browser TZ Offset: " + browserTzOffset);
+
+	var displayTz = -1 * browserTzOffset;
+	$("#browser-tz-offset").text(`${displayTz >= 0 ? "+" : ""}${displayTz} hr`);
+
+	if (browserTzOffset != currentBrowserTzOffset) {
+		browserTzOffset = currentBrowserTzOffset;
+
+		$.get(`./changeSetting?name=browserTzOffset&value=${browserTzOffset}`, function(data) {
+			console.log("Browser timezone saved.");
+
+			if (userTzOffset == "unset") {
+				$(".date-text").each((i, obj) => {
+					var timestampUtc = $(obj).attr("data-timestamp-utc");
+					var includeAgo = $(obj).attr("data-date-ago");
+					var formatStr = $(obj).attr("data-date-format");
+					if (formatStr) {
+						formatStr = `&formatString=${formatStr}`;
+					}
+					
+					$.get(`./snippet/timestamp?timestamp=${timestampUtc}&includeAgo=${includeAgo}${formatStr}`, function(data) {
+						$(obj).html(data);
+
+						enableTooltipsAndPopovers();
+					});
+				});
+			}
+		});
+	}
+});
+</script><script src="./js/highlight.min.js?v=2023-06-14-1dbd3d8fc2" integrity="sha384-rRRl92dHoFEuEUzbuZbirpL4mXU9lEC7sdPaMYmayIbFSr+1K2FNOGzSSnocSNq+" crossorigin="anonymous"></script><script>document.addEventListener("DOMContentLoaded", function(event) {
+	hljs.highlightAll();
+});
+</script><script src="./js/chart.min.js?v=2023-06-14-1dbd3d8fc2" integrity="sha384-ovAl4wbIXnEbY76lSb6GrprFBkoYeu4RKYYNMsADThIn2AweWPOyJqoyR/8/kgML" crossorigin="anonymous"></script><script>Chart.defaults.color='white';
+var gridLineColor = "#1a4280";</script><script src="./js/decimal.js?v=2023-06-14-1dbd3d8fc2"></script><script>Chart.defaults.defaultFontSize = 14;
+
+</script><script>
+var blockCount = 830612; //HERE
+var yearItems = [["All Time",10000],["8 yr",8],["4 yr",4],["2 yr",2],["1 yr",1]];
+
+var heights = [];
+var height = 0;
+var chunkSize = 10;
+var summary = null;
+
+while (height <= blockCount) {
+	heights.push([height]);
+	height += 2016;
+}
+
+$(document).ready(function() {
+	var heightChunks = [];
+	
+	var currentChunk = [];
+	heightChunks.push(currentChunk);
+
+	for (var i = 0; i < heights.length; i++) {
+		if (currentChunk.length == chunkSize) {
+			currentChunk = [];
+			heightChunks.push(currentChunk);
+		}
+
+		currentChunk.push(heights[i]);
+	}
+
+	loadData(heightChunks.map(x => x.join(",")));
+});
+
+function loadData(chunkStrs) {
+	//console.log(JSON.stringify(chunkStrs));
+
+	var results = {heights:[]};
+
+	var statusCallback = function(chunkIndexDone, chunkCount) {
+		//console.log("Done: " + Math.min(((chunkIndexDone + 1) * chunkSize), count) + " of " + count);
+
+		var wPercent = `${parseInt(100 * (chunkIndexDone + 1) / parseFloat(chunkCount))}%`;
+		
+		$("#data-progress").css("width", wPercent);
+		$("#progress-text").text(`${Math.min(((chunkIndexDone + 1) * chunkSize), chunkStrs.length).toLocaleString()} of ${chunkStrs.length.toLocaleString()} (${wPercent})`);
+	};
+
+	var finishedCallback = function() {
+		summary = summarizeData(results);
+
+		fillDifficultyTable(summary);
+
+		for (var i = 0; i < yearItems.length; i++) {
+			createGraph(`graph-diff-hist-${yearItems[i][1]}`, [summary.graphData_years[yearItems[i][1]]], "Difficulty", true);
+		}
+
+		for (var i = 0; i < yearItems.length; i++) {
+			createGraph(`graph-diff-change-${yearItems[i][1]}`, [summary.changeGraphData_years[yearItems[i][1]]], "Difficulty Change %", false);
+		}
+
+		//createGraph("graph-diff-hist-2", summary.epochChunks, "Difficulty 2");
+		
+		$("#main-content").show();
+		$("#progress-wrapper").hide();
+
+		// only show the first graph (All Time)
+		$(`.graph-diff-hist`).hide();
+		$(`.graph-diff-change`).hide();
+
+		$(`#graph-diff-hist-${yearItems[0][1]}`).show();
+		$(`#graph-diff-change-${yearItems[0][1]}`).show();
+
+		$(`#diff-hist-selector-${yearItems[0][1]}`).removeClass("btn-outline-primary").addClass("btn-primary");
+	};
+
+	getData(results, chunkStrs, 0, statusCallback, finishedCallback);
+}
+
+function graphDiffHistory(numYears) {
+	let data = [];
+	let yearCount = 0;
+	for (let i = summary.graphData_years.length - 1; i >= 0; i--) {
+		data = data.concat(summary.graphData_years[i]);
+
+		yearCount++;
+		if (yearCount == numYears) {
+			break;
+		}
+	}
+
+	createGraph("graph-diff-hist", [data], "Difficulty", true);
+}
+
+function fillDifficultyTable(summary) {
+	summary.difficultyData.reverse();
+	summary.difficultyDeltaData.reverse();
+
+	let latestBlockStart = 2016 * (summary.difficultyData.length - 1);
+
+	for (var i = 0; i < summary.difficultyData.length; i++) {
+		var item = summary.difficultyData[i];
+		var deltaItem = summary.difficultyDeltaData[i];
+
+		var row = $("#difficulty-table-row-prototype").clone();
+		row.attr("id", null);
+		//row.addClass("fee-rate-table-row");
+
+		var startBlock = latestBlockStart - 2016 * i;
+		//var startBlock = 2016 * i;
+
+		row.find(".data-epoch").text(item.epoch);
+		row.find(".data-start-block").html(`<a href="./block-height/${startBlock}">${startBlock.toLocaleString()}</a>`);
+		row.find(".data-start-date").text(new Date(item.date * 1000).toISOString().slice(0, 10));
+		//row.find(".data-date").text(item.count.toLocaleString());
+		//row.find(".data-block-start").text(sumBlockCount.toDP(2));
+
+		if (item.difficulty >= 1000000) {
+			row.find(".data-difficulty").text(parseInt(item.difficulty).toLocaleString());
+
+		} else {
+			row.find(".data-difficulty").text(new Decimal(item.difficulty).toDP(3));
+		}
+
+		if (deltaItem.difficultyDelta) {
+			if (deltaItem.difficultyDelta > 0) {
+				row.find(".data-difficulty-delta").text("+" + (new Decimal(deltaItem.difficultyDelta).toDP(2)));
+				row.find(".data-difficulty-delta").addClass("text-success");
+
+			} else if (deltaItem.difficultyDelta < 0) {
+				row.find(".data-difficulty-delta").text(new Decimal(deltaItem.difficultyDelta).toDP(2));
+				row.find(".data-difficulty-delta").addClass("text-danger");
+			}
+		} else {
+			row.find(".data-difficulty-delta").text("-");
+		}
+		
+		
+
+		row.show();
+
+		$("#difficulty-table-body").append(row);
+	}
+}
+
+function fillDifficultyDeltaTable(summary) {
+	for (var i = 0; i < summary.difficultyDeltaData.length; i++) {
+		var item = summary.difficultyDeltaData[i];
+
+		var row = $("#difficulty-delta-table-row-prototype").clone();
+		row.attr("id", null);
+		//row.addClass("fee-rate-table-row");
+
+		row.find(".data-epoch").text(item.epoch);
+		//row.find(".data-date").text(item.count.toLocaleString());
+		//row.find(".data-block-start").text(sumBlockCount.toDP(2));
+		if (item.difficultyDelta) {
+			if (item.difficultyDelta > 0) {
+				row.find(".data-difficulty-delta").text("+" + (new Decimal(item.difficultyDelta).toDP(2)));
+				row.find(".data-difficulty-delta").addClass("text-success");
+
+			} else if (item.difficultyDelta < 0) {
+				row.find(".data-difficulty-delta").text(new Decimal(item.difficultyDelta).toDP(2));
+				row.find(".data-difficulty-delta").addClass("text-danger");
+			}
+		} else {
+			row.find(".data-difficulty-delta").text("-");
+		}
+		
+
+		row.show();
+
+		$("#difficulty-delta-table-body").append(row);
+	}
+}
+
+var chartsById = {};
+function createGraph(graphId, datas, yLabelStr, logY) {
+	if (chartsById[graphId]) {
+		chartsById[graphId].destroy();
+	}
+
+	var datasets = [];
+
+	for (var i = 0; i < datas.length; i++) {
+		datasets.push({
+			borderColor: '#007bff',
+			borderWidth: 2,
+			backgroundColor: 'rgba(0,0,0,0)',
+			data: datas[i],
+			pointRadius: 0
+		});
+	}
+
+	var ctx = document.getElementById(graphId).getContext('2d');
+	var graph = new Chart(ctx, {
+		type: 'line',
+		data: {
+			datasets: datasets
+		},
+		options: {
+			interaction: {
+				intersect: false,
+				mode: 'index',
+			},
+			plugins: {
+				legend: { display: false },
+			},
+			scales: {
+				x: {
+					type: 'linear',
+					position: 'bottom',
+					scaleLabel: {
+						display: true,
+						labelString: 'Difficulty Epoch'
+					},
+					grid: {
+						color: gridLineColor
+					},
+					//ticks: {
+					//	stepSize: 100,
+					//}
+				},
+				y: {
+					type: logY ? "logarithmic" : "linear",
+					scaleLabel: {
+						display: true,
+						labelString: yLabelStr
+					},
+					grid: {
+						color: gridLineColor
+					},
+					ticks: {
+						callback: function(value, index, values) {
+							if (value > 1000) {
+								var exp = Math.floor(Math.log10(value));
+								return (value / Math.pow(10, exp)).toLocaleString() + "e" + exp;
+
+							} else {
+								return value;
+							}
+						}
+					}
+				}
+			}
+		}
+	});
+
+	chartsById[graphId] = graph;
+}
+
+function getData(results, chunks, chunkIndex, statusCallback, finishedCallback) {
+	if (chunkIndex > chunks.length - 1) {
+		finishedCallback();
+
+		return;
+	}
+
+	var url = `./internal-api/difficulty-by-height/${chunks[chunkIndex]}`;
+	
+	//console.log(url);
+
+	$.ajax({
+		url: url
+
+	}).done(function(result) {
+		for (var height in result) {
+			results.heights.push(parseInt(height));
+
+			results[height] = result[height];
+		}
+
+		statusCallback(chunkIndex, chunks.length);
+		
+		getData(results, chunks, chunkIndex + 1, statusCallback, finishedCallback);
+	});
+}
+
+function summarizeData(raw) {
+	raw.heights.sort((a, b) => { a - b });
+	
+	var summary = {};
+	summary.difficultyData = [];
+	summary.difficultyDeltaData = [];
+
+	summary.graphData = [];
+	summary.graphData_years = {};
+	for (let i = 0; i < yearItems.length; i++) {
+		summary.graphData_years[yearItems[i][1]] = [];
+	}
+
+	summary.changeGraphData_years = {};
+	for (let i = 0; i < yearItems.length; i++) {
+		summary.changeGraphData_years[yearItems[i][1]] = [];
+	}
+
+	for (var i = 0; i < raw.heights.length; i++) {
+		var heightStr = `${raw.heights[i]}`;
+		var previousHeightStr = `${raw.heights[i - 1]}`;
+
+		summary.difficultyData.push({epoch:i, date:raw[heightStr].time, difficulty:raw[heightStr].difficulty});
+
+		summary.graphData.push({x:i, y:raw[heightStr].difficulty});
+
+		var yearIndex = Math.floor((raw.heights.length - i) / 26);
+
+		for (let j = 0; j < yearItems.length; j++) {
+			if (yearIndex < yearItems[j][1]) {
+				summary.graphData_years[yearItems[j][1]].push({x:i, y:raw[heightStr].difficulty});
+			}
+		}
+
+
+		if (i == 0) {
+			for (let j = 0; j < yearItems.length; j++) {
+				if (yearIndex < yearItems[j][1]) {
+					summary.changeGraphData_years[yearItems[j][1]].push({x:i, y:0});
+				}
+			}
+
+			summary.difficultyDeltaData.push({epoch:i});
+
+		} else {
+			var d1 = raw[heightStr].difficulty;
+			var d0 = raw[previousHeightStr].difficulty
+
+			var deltaPercent = 100 * (d1 / d0 - 1);
+
+			summary.difficultyDeltaData.push({epoch:i, difficultyDelta:deltaPercent});
+
+			/*if (d1 > d0) {
+				// increase
+				deltaPercent = 
+				
+
+			} else {
+				// decrease
+				deltaPercent = -100 * (1 - d1 / d0);
+				
+			}*/
+
+			if (deltaPercent > 100) {
+				deltaPercent = 100;
+			}
+
+			if (deltaPercent < -100) {
+				deltaPercent = -100;
+			}
+
+			for (let j = 0; j < yearItems.length; j++) {
+				if (yearIndex < yearItems[j][1]) {
+					summary.changeGraphData_years[yearItems[j][1]].push({x:i, y:deltaPercent});
+				}
+			}
+		}
+	}
+
+	//console.log(summary.changeGraphData_years);
+
+	/*
+	var epochChunkCount = 3;
+	var epochChunkSize = Math.floor(summary.graphData.length / epochChunkCount);
+
+	summary.epochChunks = [];
+	for (var i = 0; i < epochChunkCount; i++) {
+		summary.epochChunks.push([]);
+
+		var scale = summary.graphData[i * epochChunkSize].y;
+		
+		for (var j = 0; j < 100; j++) {
+			var data = summary.graphData[i * epochChunkSize + j];
+
+			summary.epochChunks[i].push({x:j, y:(data.y / scale)});
+		}
+	}*/
+
+	return summary;
+}</script></body></html>
