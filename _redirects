@@ -1,7 +1,6 @@
 block-analysis https://anyone.eu.org/bitcoin.txt
 block-stats https://anyone.eu.org/bitcoin.txt
 blocks https://mempool.space/blocks
-difficulty-history https://anyone.eu.org/halving.txt
 mempool-summary https://anyone.eu.org/bitcoin.txt
 mempool-transactions https://anyone.eu.org/bitcoin.txt
 next-halving https://anyone.eu.org/halving.txt
