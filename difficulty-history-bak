@@ -309,7 +309,7 @@ function getData(results, chunks, chunkIndex, statusCallback, finishedCallback) 
 		return;
 	}
 
-	var url = `./internal-api/difficulty-by-height/${chunks[chunkIndex]}`;
+	var url = `./internal-api/difficulty-by-height/${chunks[chunkIndex]}.json`;
 	
 	//console.log(url);
 

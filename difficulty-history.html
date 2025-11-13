@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function(event) {''
 var gridLineColor = "#1a4280";</script><script src="./js/decimal.js?v=2023-06-14-1dbd3d8fc2"></script><script>Chart.defaults.defaultFontSize = 14;
 
 </script><script>
-var blockCount = 923335; //HERE
+var blockCount = 923426; //HERE
 var yearItems = [["All Time",10000],["8 yr",8],["4 yr",4],["2 yr",2],["1 yr",1]];
 
 var heights = [];
@@ -309,7 +309,7 @@ function getData(results, chunks, chunkIndex, statusCallback, finishedCallback) 
 		return;
 	}
 
-	var url = `./internal-api/difficulty-by-height/${chunks[chunkIndex]}`;
+	var url = `./internal-api/difficulty-by-height/${chunks[chunkIndex]}.json`;
 	
 	//console.log(url);
 
